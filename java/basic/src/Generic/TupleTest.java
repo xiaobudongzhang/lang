@@ -2,7 +2,7 @@ package Generic;
 
 public class TupleTest{
     public static Tuple<String, Integer> f(){
-        return new Tuple<String, Integer>("hi", 47);
+        return new Tuple<>("hi", 47);
     }
 
     public static void main(String args[]){
