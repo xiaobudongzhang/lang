@@ -27,6 +27,7 @@ public class HashTest {
         System.out.println("\"level\".hashCode() ^ \"level\".hashCode() >>> 16 & (16 - 1)	:" + (("level".hashCode() ^ ("level".hashCode() >>> 16) )& (16 - 1)));
         System.out.println("\"address\".hashCode() ^ \"level\".hashCode() >>> 16 & (16 - 1)	:" + (("address".hashCode() ^ ("address".hashCode() >>> 16) ) & (16 - 1)));
 
+        System.out.println(Integer.MAX_VALUE);
     }
 
     static final int hash(Object key) {
