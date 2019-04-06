@@ -8,6 +8,7 @@ var name string
 
 func init()  {
 	flag.StringVar(&name, "name", "zhang", "name max length 20")
+	flag.StringVar(&name, "name2", "zhang", "name max length 20")
 }
 
 func main()  {
