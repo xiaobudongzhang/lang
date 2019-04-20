@@ -7,6 +7,7 @@ import (
 var name string
 
 func Init()  {
+	fmt.Printf("init\n")
 	flag.StringVar(&name, "name", "zhang", "name max length 20")
 	flag.StringVar(&name, "name2", "zhang", "name max length 20")//参数name2也指向name变量
 }
