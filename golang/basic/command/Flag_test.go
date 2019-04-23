@@ -18,4 +18,7 @@ func TestInit(t *testing.T) {
 
 	fmt.Printf("ptr:%p\n", &dogPtr)
 	fmt.Printf("dog:%v\n", &dog)
+
+	str := "dddd"
+	fmt.Printf("%d", str)
 }

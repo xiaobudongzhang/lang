@@ -22,22 +22,50 @@ func TestDog_Name(t *testing.T) {
 	dog := Dog{"little pig", 5}
 
 	dogPtr := unsafe.Pointer(&dog)
-	dogPp := uintptr(dogPtr)
+	dogPp := (*string)(dogPtr)
 
 	dogP := &dog
+	y :=uintptr(dogPtr)
+	px := unsafe.Pointer(y+ unsafe.Offsetof(dogP.age))
+
+	x2 := unsafe.Pointer(nil)
+	fmt.Printf("px ,x2:%v,%v\n",  px, x2)
+/*	dogP := &dog
 	agePtr := dogPp + unsafe.Offsetof(dogP.age)
 	ageP := (*int)(unsafe.Pointer(agePtr))
+*/
+	fmt.Printf("ageP:%v\n", *dogPp)
 
-
-	fmt.Printf("&dog:%p\n", &dog)
+/*	fmt.Printf("&dog:%p\n", &dog)
 	fmt.Printf("dogPp:%v\n", dogPp)
 	fmt.Printf("&dogPp:%p\n", &dogPp)
+	fmt.Printf("dog:%v\n", dog)
 
-	*ageP = 4
+	dog.age =55
+
+	fmt.Printf("dog:%v\n", dog)
+	//*ageP = 4
 	fmt.Printf("unsafe.Offsetof(dogP.age):%v\n", unsafe.Offsetof(dogP.age))
 	fmt.Printf("&dog.age:%v\n", *(&dog.age))
-	fmt.Printf("ageP:%v\n", ageP)
+*/
+	dog.name = "big dog"
+	fmt.Printf("ageP:%v\n", *dogPp)
+/*
+	// Alignof
+	fmt.Println(unsafe.Alignof(struct {
+		f  int8
+		ff int32
+	}{}))
 
 
 
+	//1 .
+	f := 1.1
+	fmt.Printf("f:%f, Float64bits:%v\n", f, Float64bits(f))*/
+	ax := 1
+	u := uintptr(unsafe.Pointer(&ax))
+
+	x4 := unsafe.Pointer(u)
+	fmt.Printf("%v\n", x4)
 }
+

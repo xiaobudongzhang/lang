@@ -25,4 +25,8 @@ func NewDog(name string) *Dog {
 	return &Dog{name:name}
 }
 
+func (dog *Dog) Gc() {
+	dog = nil
+}
+
 
