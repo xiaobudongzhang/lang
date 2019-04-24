@@ -1,5 +1,5 @@
 package Generic;
-//泛型方法
+
 public class Methods {
     public <T> void f(T x){
         System.out.println(x.getClass().getName());
