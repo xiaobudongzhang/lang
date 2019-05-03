@@ -1,10 +1,6 @@
 package Jvm;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.WeakHashMap;
-
 /**
  *  Demonstrates a replacement for <code>String.intern()</code> that uses
  *  weak references to hold the interned strings. Once any original strong
