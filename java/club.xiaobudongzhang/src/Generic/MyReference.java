@@ -6,7 +6,6 @@ class MyReference {
     public static void main(String args[]){
         MyReference  ref = new MyReference();
         ref.Soft();
-        System.out.println("x.a2  " + x.a2);
     }
     //强引用
     public void Strong() {

@@ -15,7 +15,7 @@ public class SerializableDemo {
         FileOutputStream outputStream = new FileOutputStream(f);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         objectOutputStream.writeObject(new SerializableDemo.User("root", "123456"));
-        objectOutputStream.close();
+        objectOutputStream.reset();
     }
 
     public static void readObject(File f) throws IOException, ClassNotFoundException {

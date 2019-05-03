@@ -10,9 +10,7 @@ import java.util.WeakHashMap;
  *  in the program.
  */
 public class WeakCanonicalizingMap {
-    private Map<String,WeakReference<String>> _map
-            = new WeakHashMap<String,WeakReference<String>>();
-
+    private Map<String,WeakReference<String>> _map = new WeakHashMap<String,WeakReference<String>>();
     /**
      *  Returns a canonical instance of the passed string: the first string
      *  interned by this map (which may be the passed string).
@@ -30,8 +28,6 @@ public class WeakCanonicalizingMap {
         _map.put(str, new WeakReference<String>(str));
         return str;
     }
-
-
     /**
      *  Returns the number of entries in the map. This is useful for a demo,
      *  probably not so much in real life (except as a debugging tool).

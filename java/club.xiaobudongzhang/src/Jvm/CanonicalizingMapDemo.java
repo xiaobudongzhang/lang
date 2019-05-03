@@ -1,6 +1,9 @@
 package Jvm;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  *  Demonstrates a replacement for <code>String.intern()</code> that uses
@@ -19,7 +22,7 @@ public class CanonicalizingMapDemo
 
         // we have to create these strings from character arrays, because the
         // JVM would intern any string literals, keeping a strong reference
-        String s1 = new String(new char[] {'a', 'b', 'c'});
+        String s1 = new String(new char[] {'a', 'b', 'c'});//不能是字符串常量,字符串常量是隐形强引用，比如 String s1 = "abc";
         String s2 = new String(new char[] {'a', 'b', 'c'});
 
         System.out.println("pre-intern, map size = " + canon.size());
@@ -46,8 +49,8 @@ public class CanonicalizingMapDemo
     {
         // a megabyte of memory is generally enough to fill the young generation
         ArrayList<byte[]> foo = new ArrayList<byte[]>();
-        for (int ii = 0 ; ii < 1024 ; ii++)
-            foo.add(new byte[1024]);
+        for (int ii = 0 ; ii < 10240 ; ii++)
+            foo.add(new byte[10240]);
 
         // now we allow it to be GC'd, and ask the JVM to do so
         foo = null;
