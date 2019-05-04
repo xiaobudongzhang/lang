@@ -5,7 +5,7 @@ import java.lang.ref.*;
 class MyReference {
     public static void main(String args[]){
         MyReference  ref = new MyReference();
-        ref.Soft();
+        ref.Weak();
     }
     //强引用
     public void Strong() {
