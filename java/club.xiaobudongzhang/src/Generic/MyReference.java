@@ -1,11 +1,16 @@
 package Generic;
 
 import java.lang.ref.*;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
 
 class MyReference {
     public static void main(String args[]){
         MyReference  ref = new MyReference();
-        ref.Weak();
+        Object t1;
+        t1 = new String("x");
+        ref.Phantom(t1);
     }
     //强引用
     public void Strong() {
@@ -71,21 +76,39 @@ class MyReference {
         //weak ref get2 null
         //weak ref not null java.lang.ref.WeakReference@4554617c
     }
+    private Object t(Object t1){
+        return t1;
+    }
     //幻想引用（finalize后做某些事的规则）
-    public void Phantom(){
+    public void Phantom(Object counter1){
         
-        Object counter = new Object();
+
+        Object counter  = new String("x");
+        //Object c2 = counter;
         ReferenceQueue refQueue = new ReferenceQueue<>();
         PhantomReference<Object> p = new PhantomReference<>(counter, refQueue);
+        IdentityHashMap<String,Object> _ref2Cxt = new IdentityHashMap<>();
+
+        //String st1 = new String("ee");
+        String st = new String("hello");
+        _ref2Cxt.put(st, counter);
+        _ref2Cxt.remove(st);
+
         counter = null;//可以被垃圾收集器收集了
-        System.gc();
+       // counter1 = null;
+        //p = null;
+        attemptGC();
         try {
-            System.out.println("phantom ref get " + p.get());
-            Reference<Object> ref = refQueue.remove(1000L);
-            if (ref != null) {
+            //System.out.println("phantom ref get " + p.get());
+       /*    Reference<Object> ref1 = refQueue.remove(1000L);
+            if (ref1 != null) {
                 System.out.println("phantom ref not null");
+            }*/
+            Reference<Object> ref;
+            while ((ref = refQueue.poll()) != null){
+                System.out.println("ref  " + ref);
             }
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             System.out.println("error");
         }
         //output
@@ -93,8 +116,13 @@ class MyReference {
         //phantom ref not null
     }
 
-    public static class x {
-        public int a = 1;
-        public static int a2 =2 ;
+    private static void attemptGC()
+    {
+        // in my experience, it's not enough to call System.gc(); allocating
+        // chunks of memory makes it actually do some works
+        ArrayList<byte[]> foo = new ArrayList<byte[]>();
+        for (int ii = 0 ; ii < 10000 ; ii++)
+            foo.add(new byte[10240]);
+        System.gc();
     }
 }
