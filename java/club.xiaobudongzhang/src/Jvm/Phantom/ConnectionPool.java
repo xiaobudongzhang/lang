@@ -50,7 +50,8 @@ public class ConnectionPool
             Class.forName(driver);
             for (int ii = 0 ; ii < maxConn ; ii++)
             {
-                _pool.add(DriverManager.getConnection(url, user, passwd));
+                Connection s = DriverManager.getConnection(url, user, passwd);
+                _pool.add(s);
             }
         }
         catch (Exception e)
@@ -71,7 +72,7 @@ public class ConnectionPool
         Connection wrapped = PooledConnection.newInstance(this, cxt);
 
         PhantomReference<Connection> ref = new PhantomReference<Connection>(wrapped, _refQueue);
-        _cxt2Ref.put(cxt, cxt);
+        _cxt2Ref.put(cxt, ref);
         _ref2Cxt.put(ref, cxt);
 
         System.err.println("Acquired connection " + cxt);
@@ -86,8 +87,9 @@ public class ConnectionPool
     synchronized void releaseConnection(Connection cxt)
     {
         Object ref = _cxt2Ref.remove(cxt);
-        _ref2Cxt.remove(ref); //@todo
+        _ref2Cxt.remove(ref);
         _pool.offer(cxt);
+        System.err.println("Released connection " + cxt);
     }
 
 
@@ -97,9 +99,9 @@ public class ConnectionPool
      */
     private synchronized void releaseConnection(Reference<?> ref)
     {
-   /*     Connection cxt = _ref2Cxt.remove(ref);
+        Connection cxt = _ref2Cxt.remove(ref);
         if (cxt != null)
-            releaseConnection(cxt);*/
+            releaseConnection(cxt);
     }
 
     public void Print()
@@ -117,18 +119,18 @@ public class ConnectionPool
      */
     private void tryWaitingForGarbageCollector()
     {
-/*        try
+        try
         {
-*//*            Reference<?> ref = _refQueue.remove(100);
+            Reference<?> ref = _refQueue.remove(100);
             if (ref != null) {
                 releaseConnection(ref);
-            }*//*
+            }
         }
         catch (InterruptedException ignored)
         {
             // we have to catch this exception, but it provides no information here
             // a production-quality pool might use it as part of an orderly shutdown
-        }*/
+        }
     }
 
 
@@ -150,7 +152,7 @@ public class ConnectionPool
                 if (_pool.size() > 0)
                     return wrapConnection(_pool.remove());
             }
-            //tryWaitingForGarbageCollector();
+            tryWaitingForGarbageCollector();
         }
     }
 }

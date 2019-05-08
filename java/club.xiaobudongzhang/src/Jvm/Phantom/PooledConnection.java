@@ -74,6 +74,7 @@ public class PooledConnection implements InvocationHandler{
 
     private void close() throws SQLException {
         if (_cxt != null) {
+            System.out.println("call close2");
             _pool.releaseConnection(_cxt);
             _cxt = null;
         }

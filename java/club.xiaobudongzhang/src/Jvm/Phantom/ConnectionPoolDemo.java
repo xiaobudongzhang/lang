@@ -29,25 +29,16 @@ public class ConnectionPoolDemo
                                 5);
 
         Connection cxt = null;
-        //for (int ii = 0 ; ii < 10 ; ii++)
+        for (int ii = 0 ; ii < 10 ; ii++)
         {
             // this assignment leaves the previously-allocated connection 
             // available for collection; we get metadata to verify that
             // the connection is valid
             cxt = pool.getConnection();
-           // cxt.getMetaData();
-            //pool.releaseConnection(cxt);
-            cxt.close();
-            //_cxt2Ref.put(cxt, new String("ddddddd"));
-            cxt = null;
-          /*  cxt = pool.getConnection();
-            cxt.getMetaData();*/
-            //cxt.close();
-
-            //Thread.sleep(2000L);
+            cxt.getMetaData();
             attemptGC();
-            pool.Print();
         }
+        System.out.println("end");
     }
 
     private static void attemptGC()
