@@ -29,7 +29,7 @@ public class ConnectionPoolDemo
                                 5);
 
         Connection cxt = null;
-        for (int ii = 0 ; ii < 10 ; ii++)
+        for (int ii = 0 ; ii < 100000 ; ii++)
         {
             // this assignment leaves the previously-allocated connection 
             // available for collection; we get metadata to verify that

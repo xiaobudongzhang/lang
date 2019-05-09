@@ -5,6 +5,7 @@ public class SlowFinalizer {
     {
         while (true)
         {
+            Thread.sleep(1L);
             Object foo = new SlowFinalizer();
         }
     }
@@ -15,7 +16,7 @@ public class SlowFinalizer {
     // and the finalizer, which does nothing by take time
     protected void finalize() throws Throwable
     {
-        try { Thread.sleep(500L); }
+        try { Thread.sleep(120000L); }
         catch (InterruptedException ignored) {}
         super.finalize();
     }
