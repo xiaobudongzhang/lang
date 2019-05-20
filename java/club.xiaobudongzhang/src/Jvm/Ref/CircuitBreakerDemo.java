@@ -1,5 +1,5 @@
 // Copyright (c) 2007 Keith D Gregory
-package Jvm;
+package Jvm.Ref;
 
 import java.lang.ref.SoftReference;
 import java.lang.reflect.InvocationHandler;

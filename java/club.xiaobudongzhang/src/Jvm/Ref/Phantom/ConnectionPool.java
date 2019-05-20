@@ -1,5 +1,5 @@
 // Copyright (c) 2007 Keith D Gregory
-package Jvm.Phantom;
+package Jvm.Ref.Phantom;
 
 import java.lang.ref.PhantomReference;
 import java.lang.ref.Reference;

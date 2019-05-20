@@ -1,4 +1,4 @@
-package Jvm.Phantom;
+package Jvm.Ref.Phantom;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

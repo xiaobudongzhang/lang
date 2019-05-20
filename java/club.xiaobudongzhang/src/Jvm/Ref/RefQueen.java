@@ -1,4 +1,4 @@
-package Jvm;
+package Jvm.Ref;
 
 import java.lang.ref.WeakReference;
 import java.util.HashSet;
