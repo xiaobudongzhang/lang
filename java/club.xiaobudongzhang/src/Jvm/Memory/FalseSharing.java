@@ -1,4 +1,8 @@
 package Jvm.Memory;
+
+import java.util.concurrent.atomic.AtomicLong;
+
+
 //伪共享问题
 public class FalseSharing implements Runnable
 {
@@ -55,7 +59,7 @@ public class FalseSharing implements Runnable
         long i = ITERNATIONS + 1;
         while (0 != --i)
         {
-            longs[arrayIndex].value = 1;
+            longs[arrayIndex].set(i);
         }
     }
     //PaddedAtomicLong类如果只对final的FalseSharing类可见（就是说PaddedAtomicLong不能再被继承了）。
@@ -66,17 +70,17 @@ public class FalseSharing implements Runnable
         PaddedAtomicLong v = longs[index];
         return v.p1 + v.p2 + v.p3 + v.p4 + v.p5 + v.p6;
     }
-    public static class PaddedAtomicLong extends VolatileLong
+    //对象头8字节
+    // 需要在jvm启动时设置-XX:-RestrictContended才会生效
+    //@sun.misc.Contended
+    public static class PaddedAtomicLong extends AtomicLong
     {
         public volatile long p1, p2, p3, p4, p5, p6 = 7L;
     }
 
-    //对象头8字节
-   // 需要在jvm启动时设置-XX:-RestrictContended才会生效
-    //@sun.misc.Contended
-    public  static class VolatileLong
-    {
-        public volatile long value = 0L;
-        public long p1, p2, p3, p4, p5, p6;
-    }
+   // public  static class VolatileLong
+   // {
+   //     public volatile long value = 0L;
+   //     public long p1, p2, p3, p4, p5, p6;
+   // }
 }
