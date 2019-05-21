@@ -6,13 +6,15 @@ public class FalseSharing implements Runnable
     public final static long ITERNATIONS = 500L * 1000L * 100L;
     private final int arrayIndex;
 
-    private static VolatileLong[] longs = new VolatileLong[NUM_THREADS];
+    private static PaddedAtomicLong[] longs = new PaddedAtomicLong[NUM_THREADS];
+    private static long[] longs2 = new long[NUM_THREADS];
 
     static //只被加载一次
     {
         for (int i = 0; i < longs.length; i++)
         {
-            longs[i] = new VolatileLong();
+            longs[i] = new PaddedAtomicLong();
+            longs2[i] = sumPaddingToPreventOptimisation(i);
         }
     }
 
@@ -56,12 +58,25 @@ public class FalseSharing implements Runnable
             longs[arrayIndex].value = 1;
         }
     }
+    //PaddedAtomicLong类如果只对final的FalseSharing类可见（就是说PaddedAtomicLong不能再被继承了）。
+    // 这样一来编译器就会“知道”它正在审视的是所有可以看到这个填充字段的代码，
+    // 这样就可以证明没有行为依赖于p1到p7这些字段。那么“聪明”的JVM会把上面这些丝毫不占地方的字段统统优化掉。
+    public static long sumPaddingToPreventOptimisation(final int index)
+    {
+        PaddedAtomicLong v = longs[index];
+        return v.p1 + v.p2 + v.p3 + v.p4 + v.p5 + v.p6;
+    }
+    public static class PaddedAtomicLong extends VolatileLong
+    {
+        public volatile long p1, p2, p3, p4, p5, p6 = 7L;
+    }
+
     //对象头8字节
    // 需要在jvm启动时设置-XX:-RestrictContended才会生效
-    @sun.misc.Contended
-    public final static class VolatileLong
+    //@sun.misc.Contended
+    public  static class VolatileLong
     {
         public volatile long value = 0L;
-        //public long p1, p2, p3, p4, p5, p6;
+        public long p1, p2, p3, p4, p5, p6;
     }
 }
