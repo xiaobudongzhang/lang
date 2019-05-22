@@ -70,15 +70,14 @@ public class FalseSharing implements Runnable
         PaddedAtomicLong v = longs[index];
         return v.p1 + v.p2 + v.p3 + v.p4 + v.p5 + v.p6;
     }
-    //对象头8字节
-    // 需要在jvm启动时设置-XX:-RestrictContended才会生效
-    //@sun.misc.Contended
     public static class PaddedAtomicLong extends AtomicLong
     {
         public volatile long p1, p2, p3, p4, p5, p6 = 7L;
     }
-
-   // public  static class VolatileLong
+    //对象头8字节
+    // 需要在jvm启动时设置-XX:-RestrictContended才会生效
+    //@sun.misc.Contended  // java8
+   // public final static class VolatileLong
    // {
    //     public volatile long value = 0L;
    //     public long p1, p2, p3, p4, p5, p6;
